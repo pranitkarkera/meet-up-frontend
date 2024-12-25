@@ -35,86 +35,122 @@ const MarketingSeminar = () => {
       {error && <p>Error fetching events: {error.message}</p>}
       <div>
         {filteredTopicData.map((event) => (
-          <div className="row my-4" key={event._id}>
-            <div className="col-6 text-start">
-              <div className="container">
+          <div className="row" key={event._id} style={{ display: "flex" }}>
+            <div className="col-md-6" style={{ textAlign: "left" }}>
+              <div>
                 <h1>{event.topic}</h1>
                 <p>
-                  Hosted By:
-                  <br />
-                  <b>{event.hostedBy}</b>
+                  {" "}
+                  Hosted By: <br /> <b>{event.hostedBy}</b>
                 </p>
               </div>
 
-              <div className="card border-0 text-start">
+              <div style={{ textAlign: "left" }}>
                 <img
+                  style={{ width: "100%" }}
                   src={event.imageUrl}
-                  className="card-img-top rounded"
                   alt={`Event: ${event.topic}`}
                 />
-                <div className="card-body">
-                  <h2>Details:</h2>
-                  <p className="card-text">{event.details}</p>
-                  <h2>Additional Information:</h2>
-                  <p className="card-text">
+                <div className="mt-3">
+                  <h3>Details:</h3>
+                  <p>{event.details}</p>
+                  <h3>Additional Information:</h3>
+                  <p>
                     <b>Dress Code:</b> {event.dressCode.join(", ")}
                   </p>
-                  <p className="card-text">
+                  <p>
                     <b>Age Restrictions:</b> {event.ageRestrictions.join(", ")}
                   </p>
-                  <h2>Event Tags:</h2>
-                  <span className="badge bg-light text-dark">
-                    {event.eventTags.join(", ")}
-                  </span>
+                  <h3>Event Tags:</h3>
+                  <div className="tag-container">
+                    {event.eventTags.map((tag, index) => (
+                      <div className="tag-section" key={index}>
+                        <span className="rounded-pill bg-body-tertiary py-2 pe-2 ps-2">
+                          {tag}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-6 text-start">
-              <div className="card">
-                <div className="card-body">
-                  <div className="row align-items-center">
-                    <div className="col-1">
+            <div className="col-md-6">
+              <div
+                className="bg-body-tertiary"
+                style={{
+                  border: "2px",
+                  borderRadius: "1rem",
+                  marginTop: "1rem",
+                }}
+              >
+                <div style={{ paddingLeft: "2rem" }}>
+                  <div className="pt-3" style={{ display: "flex" }}>
+                    <div className="pe-2">
                       <IoMdTime />
                     </div>
-                    <div className="col-11">
+                    <div>
                       <p>{event.sessionTiming}</p>
                     </div>
                   </div>
-                  <div className="row align-items-center">
-                    <div className="col-1">
+
+                  <div style={{ display: "flex" }}>
+                    <div className="pe-2">
                       <SlLocationPin />
                     </div>
-                    <div className="col-11">
+                    <div>
                       <p>{event.venue}</p>
                     </div>
                   </div>
-                  <div className="row align-items-center">
-                    <div className="col-1">
+
+                  <div style={{ display: "flex" }}>
+                    <div className="pe-2">
                       <FaIndianRupeeSign />
                     </div>
-                    <div className="col-11">
+                    <div>
                       <p>₹{event.pricing}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4">
-                <h1>Speakers:</h1>
-                <div className="row">
+              <div className="row" style={{ marginTop: "2rem" }}>
+                <div className="col-md-12">
+                  <h3 style={{ textAlign: "left" }}>
+                    Speakers:{" "}
+                    {event.speakers.length > 0
+                      ? `(${event.speakers.length})`
+                      : ""}{" "}
+                  </h3>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    flexWrap: "wrap",
+                  }}
+                >
                   {event.speakers.map((speaker, index) => (
-                    <div className="col-6" key={index}>
-                      <div className="card" style={{ width: "12rem" }}>
-                        <img
-                          src={profileIcon}
-                          className="card-img-top rounded-circle"
-                          style={{ height: "120px", width: "120px" }}
-                          alt={`Speaker: ${speaker.name}`}
-                        />
-                        <div className="card-body">
-                          <h5 className="card-title">{speaker.name}</h5>
-                          <p className="card-text">{speaker.profession}</p>
+                    <div key={index}>
+                      <div
+                        className="card py-2"
+                        style={{
+                          margin: "0 0.5rem",
+                          flex: "1 1 45%",
+                          maxWidth: "200px",
+                        }}
+                      >
+                        <div>
+                          <img
+                            src={profileIcon}
+                            style={{ width: "100%", height: "auto" }}
+                            alt={`Speaker: ${speaker.name}`}
+                          />
+                          <div>
+                            <h5>{speaker.name}</h5>
+                            <p>{speaker.profession}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
